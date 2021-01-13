@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scramble Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Guess the word game</h1>
+    </header>
+    <section>
+        <div class="gamearea">
+            <h3 class="msg"></h3>
+            <input type="text" class="hidden">
+            <button class="btn">Click here to start</button>
+        </div>
+    </section>
+    <script>
+     const msg=document.querySelector('.msg');
+     const guess=document.querySelector('input');
+     const btn =document.querySelector('.btn');
+let play=false;
+let newWords="";
+let randWords="";
+let sword=['python','javascript','c++','php','java','c#','html','css','reactjs','angular','swift','android','sql','nodejs','django','laravel','mongobd','apple','mango','orange','lemon','slaman','sharuk','shanto','tanvir','al-amin','imam','ontor','habib','saddek']
+
+const createNewWord=()=>{
+let runNum=Math.floor(Math.random()*sword.length);
+let newTemsword=sword[runNum];
+return newTemsword;
+
+}
+
+const scrambleWord=(arr)=>{
+    for(let i=arr.length-1;i>0;i--){
+        let team=arr[i];
+        // console.log(team)
+        let j=Math.floor(Math.random()*(i+1));
+        // console.log(i)
+        // console.log(j)
+        arr[i]=arr[j];
+        arr[j]=team;
+    }   
+    return arr;
+
+}
+     btn.addEventListener('click',function(){
+                if(!play){
+                    play=true;
+                    btn.innerHTML="Guess"
+                    guess.classList.toggle('hidden')
+                    newWords=createNewWord();
+                
+                    randWords=scrambleWord(newWords.split('')).join("");
+                   msg.innerHTML=`Guess the word: ${randWords}`;
+                }else{
+                    let teamWords=guess.value;
+                    if(newWords===teamWords){
+                        console.log('correrct');
+                        play=false;
+                        msg.innerHTML=`Awesome It is correct.It is ${newWords}`;
+                        btn.innerHTML="Start Again"
+                        guess.classList.toggle('hidden')
+                        guess.value="";
+
+
+                    }else{
+                        console.log("incorrect");
+                        msg.innerHTML=`Sorry, It is incorrect.plz try again: ${randWords}`;
+                    }
+                }
+
+
+     })
+
+
+    </script>
+</body>
+</html>
